@@ -1,38 +1,45 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import "./Searcher.scss";
 
-function Searcher() {
+const Searcher = () => {
 
     const [photo, setPhoto] = useState("");
-    const [clientId, setClientId] = useState("Mcb8Zcr6pO6evQItPAmLkyQxWJqQX84RoJQ-QK-R5I0");
+    const clientId = "Mcb8Zcr6pO6evQItPAmLkyQxWJqQX84RoJQ-QK-R5I0";
 
-    const [result, setResult] = useState([]);
+    const [listOfPhotos, setlistOfPhotos] = useState([]);
 
     function handleChange(event) {
         setPhoto(event.target.value);
+        console.log(event.target.value);
     }
 
-    function handleSubmit(event) {
+    const url = "https://api.unsplash.com/search/photos?query=" + photo + "&client_id=" + clientId;
+    function handleSubmit() {
         console.log(photo);
-        const url = "https://api.unsplash.com/photos?page=1&query=" + photo + "&client_id=" + clientId;
 
         axios.get(url)
             .then((response => {
-                console.log(response);
-                setResult(response.data.results);
+                setlistOfPhotos(response.data.results);
             }))
     }
-    return (
-        <div>
-            <h1>Hello</h1>
-            <p>Type and choose wath you want</p>
-            <input onChange={handleChange} type="text" className="searcher--input" placeholder="type sth" />
-            <button onClick={handleSubmit} type="submit">Find Images</button>
 
-            {result.map((photo) => (
-                <img src={photo.urls.small} />
-            ))}
-        </div>
+    return (
+        <Router>
+            <div className="searcher">
+                <h1>Hello</h1>
+                <p>Search images...</p>
+                <input onChange={handleChange} type="text" className="searcher--input" placeholder="type sth" />
+                <Link to="/results" onClick={handleSubmit} type="submit" class="button">Find Images</Link>
+
+                <div className="listOfImages">
+                    {listOfPhotos.map((photo) => (
+                        <div><img key={photo.id} src={photo.urls.thumb} alt="" /></div>
+                    ))}
+                </div>
+            </div>
+        </Router>
     )
 }
 

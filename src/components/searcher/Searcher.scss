@@ -1,0 +1,39 @@
+.searcher {
+  h1,
+  p {
+    padding: 10px;
+  }
+
+  input,
+  .button {
+    border-radius: 4px;
+    margin: 10px auto;
+    padding: 5px 10px;
+  }
+  input {
+    display: block;
+    margin: 10px auto;
+  }
+  .button {
+    border: 1px solid grey;
+    color: #000;
+    cursor: pointer;
+    display: block;
+    max-width: 150px;
+    text-decoration: none;
+  }
+  .listOfImages {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    div {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      img {
+        padding: 10px;
+      }
+    }
+  }
+}
